@@ -1,0 +1,26 @@
+﻿@page "/payments"
+@using BookStore.Domain.Entities
+@inject PaymentService PaymentService
+
+<h3>Payments</h3>
+
+@foreach (var payment in payments)
+{
+    <div style="border:1px solid green; padding:10px; margin:10px;">
+        <p><b>Payment Id:</b> @payment.Id</p>
+        <p><b>Order Id:</b> @payment.OrderId</p>
+        <p><b>Amount:</b> ₹@payment.Amount</p>
+        <p><b>Status:</b> @payment.Status</p>
+        <p><b>Paid At:</b> @payment.PaidAt</p>
+    </div>
+}
+
+@code {
+
+    private List<Payment> payments = [];
+
+    protected override void OnInitialized()
+    {
+        payments = PaymentService.GetPayments();
+    }
+}

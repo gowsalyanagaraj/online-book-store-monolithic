@@ -1,0 +1,59 @@
+﻿@page "/cart"
+@using BookStore.Domain.Entities
+@inject CartService CartService
+@inject OrderService OrderService
+@inject NavigationManager NavigationManager
+
+<h3>Cart</h3>
+
+@foreach(var item in items)
+{
+    <p>
+        @item.BookTitle
+        <button @onclick="() => DecreaseQuantity(item)">-</button>
+        @item.Quantity
+        <button @onclick="() => IncreaseQuantity(item)">+</button>
+        ₹@(item.Price * item.Quantity)
+    </p>
+}
+
+@if(items.Count == 0)
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <p><b>Total:</b> ₹@items.Sum(i => i.Price * i.Quantity)</p>
+    <button @onclick="CreateOrder">
+        Place Order
+    </button>
+}
+
+@code {
+
+    private List<CartItem> items = [];
+
+    protected override void OnInitialized()
+    {
+        items = CartService.GetItems();
+    }
+
+    private void CreateOrder()
+    {
+        OrderService.CreateOrder(Guid.NewGuid(), CartService.GetItems());
+        CartService.Clear();
+        NavigationManager.NavigateTo("/orders");
+    }
+
+    private void DecreaseQuantity(CartItem item)
+    {
+        CartService.RemoveItem(item.BookId);
+        items = CartService.GetItems();
+    }
+
+    private void IncreaseQuantity(CartItem item)
+    {
+        CartService.IncreaseQuantity(item.BookId);
+        items = CartService.GetItems();
+    }
+}

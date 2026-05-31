@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="BookStore/BookStore.csproj" />
+  <Project Path="BookStore.Application/BookStore.Application.csproj" Id="ab18ceaa-600d-460e-895b-2f09fa5d0c84" />
+  <Project Path="BookStore.Domain/BookStore.Domain.csproj" Id="6bb9917a-ff5f-488c-b837-98b5260eee4a" />
+  <Project Path="BookStore.Infrastructure/BookStore.Infrastructure.csproj" Id="b88e5caf-e468-4eab-9fda-1f9452faa3f7" />
+  <Project Path="BookStore.Web/BookStore.Web.csproj" Id="26cff093-c530-4eb7-a22d-9f9cca8efe60" />
 </Solution>

@@ -1,0 +1,45 @@
+﻿@page "/"
+@using BookStore.Domain.Entities
+@inject BookService BookService
+@inject CartService CartService
+
+<h3>Books</h3>
+
+@foreach(var book in books)
+{
+    <div>
+        <b>@book.Title</b>
+
+        <br />
+
+        @book.Author
+
+        <br />
+
+        ₹@book.Price
+
+        <br />
+
+        <button
+            @onclick="() => AddToCart(book)">
+            Add To Cart
+        </button>
+
+        <hr />
+    </div>
+}
+
+@code {
+
+    private List<Book> books = [];
+
+    protected override void OnInitialized()
+    {
+        books = BookService.GetBooks();
+    }
+
+    private void AddToCart(Book book)
+    {
+        CartService.Add(book);
+    }
+}

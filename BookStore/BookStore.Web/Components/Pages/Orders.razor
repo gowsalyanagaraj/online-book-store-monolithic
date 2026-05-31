@@ -1,0 +1,63 @@
+﻿@page "/orders"
+@using BookStore.Domain.Entities
+@using BookStore.Domain.Enums
+@inject OrderService OrderService
+@inject PaymentService PaymentService
+@inject NavigationManager NavigationManager
+
+<h3>Orders</h3>
+<hr />
+
+<h4>Order List</h4>
+
+@foreach (var order in orders)
+{
+    <div style="border:1px solid gray; padding:10px; margin:10px;">
+        <p><b>Order Id:</b> @order.Id</p>
+        <p><b>Total:</b> ₹@order.TotalAmount</p>
+        <p><b>Date:</b> @order.CreatedAt</p>
+
+        <p><b>Items:</b></p>
+
+        <ul>
+            @foreach (var item in order.Items)
+            {
+                <li>
+                    @item.BookTitle - @item.Quantity x ₹@item.Price
+                </li>
+            }
+        </ul>
+        @if(!IsOrderPaid(order))
+        {
+            <button @onclick="() => Pay(order)">
+                Pay Now
+            </button>
+        }
+        else
+        {
+            <p style="color:green;"><b>Payment Status:</b> Paid</p>
+        }
+        
+    </div>
+}
+
+@code {
+
+    private List<Order> orders = [];
+
+    protected override void OnInitialized()
+    {
+        orders = OrderService.GetOrders();
+    }
+
+    private void Pay(Order order)
+    {
+        PaymentService.ProcessPayment(order.Id, order.TotalAmount);
+        NavigationManager.NavigateTo("/payments");
+    }
+
+    private bool IsOrderPaid(Order order)
+    {
+        return PaymentService.IsPaymentStatusPaid(order.Id);
+    }
+}
