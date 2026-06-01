@@ -1,7 +1,8 @@
 ﻿@page "/cart"
 @using BookStore.Domain.Entities
-@inject CartService CartService
-@inject OrderService OrderService
+@using BookStore.Domain.Interfaces
+@inject ICartService CartService
+@inject IOrderService OrderService
 @inject NavigationManager NavigationManager
 
 <h3>Cart</h3>

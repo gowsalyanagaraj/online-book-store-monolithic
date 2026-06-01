@@ -1,8 +1,8 @@
 ﻿@page "/orders"
 @using BookStore.Domain.Entities
-@using BookStore.Domain.Enums
-@inject OrderService OrderService
-@inject PaymentService PaymentService
+@using BookStore.Domain.Interfaces
+@inject IOrderService OrderService
+@inject IPaymentService PaymentService
 @inject NavigationManager NavigationManager
 
 <h3>Orders</h3>

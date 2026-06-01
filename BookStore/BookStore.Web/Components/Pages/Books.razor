@@ -1,7 +1,8 @@
 ﻿@page "/"
 @using BookStore.Domain.Entities
-@inject BookService BookService
-@inject CartService CartService
+@using BookStore.Domain.Interfaces
+@inject IBookService BookService
+@inject ICartService CartService
 
 <h3>Books</h3>
 
